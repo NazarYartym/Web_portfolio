@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PixelFlow Academy - Master Digital Art</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-dark: #121212; /* Deep dark background */
+            --secondary-dark: #1e1e1e; /* Slightly lighter dark */
+            --accent-pink: #ff007f; /* Neon Pink for vibrancy */
+            --accent-blue: #00ffff; /* Cyan for tech/digital */
+            --text-light: #f0f0f0;
+            --text-medium: #b0b0b0;
+            --border-glow: rgba(0,255,255,0.2);
+            --shadow-dark: 0 8px 25px rgba(0,0,0,0.4);
+            --shadow-light-glow: 0 0 15px rgba(0,255,255,0.3);
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-light);
+            line-height: 1.8;
+            background-color: var(--primary-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 0;
+        }
+
+        /* --- Global Styles & Typography --- */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-light);
+            margin-bottom: 25px;
+            text-align: center;
+            font-weight: 700;
+        }
+        h1 { font-size: 5.5em; line-height: 1; margin-bottom: 0.3em; text-transform: uppercase; }
+        h1 span { display: block; font-size: 0.4em; font-weight: 400; color: var(--accent-blue); }
+        h2 { font-size: 3.5em; margin-bottom: 60px; position: relative; color: var(--accent-pink); }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background-color: var(--accent-blue);
+            border-radius: 2px;
+            box-shadow: var(--shadow-light-glow);
+        }
+        h3 { font-size: 2.5em; text-align: left; color: var(--text-light); }
+        h4 { font-size: 1.8em; margin-bottom: 15px; color: var(--accent-blue); }
+
+        .btn {
+            background: linear-gradient(45deg, var(--accent-pink), #ff50a8);
+            color: white;
+            padding: 18px 40px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 1.2em;
+            transition: all 0.4s ease;
+            display: inline-block;
+            box-shadow: var(--shadow-dark);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: all 0.4s ease;
+            transform: skewX(-20deg);
+            z-index: -1;
+        }
+        .btn:hover::before {
+            left: 100%;
+        }
+        .btn:hover {
+            background: linear-gradient(45deg, #e0006f, var(--accent-pink));
+            transform: translateY(-7px) scale(1.03);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        /* --- Header / Navigation --- */
+        .header {
+            background-color: rgba(18,18,18,0.95);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .header .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5em;
+            font-weight: 800;
+            color: var(--accent-blue);
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 8px rgba(0,255,255,0.5);
+        }
+        .header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .header nav ul li {
+            margin-left: 35px;
+        }
+        .header nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: color 0.3s ease, text-shadow 0.3s ease;
+            position: relative;
+            padding-bottom: 5px;
+        }
+        .header nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-pink), var(--accent-blue));
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        .header nav ul li a:hover::after {
+            width: 100%;
+        }
+        .header nav ul li a:hover {
+            color: var(--accent-blue);
+            text-shadow: 0 0 5px rgba(0,255,255,0.7);
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            height: 3px;
+            width: 28px;
+            background-color: var(--accent-blue);
+            margin-bottom: 5px;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .menu-toggle.active span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+        .menu-toggle.active span:nth-child(2) { opacity: 0; }
+        .menu-toggle.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+
+        /* --- Hero Section --- */
+        .hero {
+            background-color: var(--primary-dark);
+            background-image: radial-gradient(circle at center, rgba(0,255,255,0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+            padding: 180px 20px 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero .light-burst {
+            position: absolute;
+            background: radial-gradient(circle, var(--accent-pink) 0%, transparent 70%);
+            opacity: 0.1;
+            filter: blur(80px);
+            animation: lightPulse 15s infinite ease-in-out alternate;
+            z-index: 0;
+        }
+        .hero .light-burst:nth-child(1) { width: 400px; height: 400px; top: 10%; left: 5%; }
+        .hero .light-burst:nth-child(2) { width: 300px; height: 300px; bottom: 10%; right: 15%; animation-delay: 3s; background: radial-gradient(circle, var(--accent-blue) 0%, transparent 70%); }
+
+        @keyframes lightPulse {
+            0% { transform: scale(0.9); opacity: 0.1; }
+            50% { transform: scale(1.1); opacity: 0.2; }
+            100% { transform: scale(0.9); opacity: 0.1; }
+        }
+        .hero p {
+            font-size: 1.4em;
+            max-width: 900px;
+            margin: 0 auto 60px auto;
+            color: var(--text-medium);
+        }
+
+        /* --- Value Proposition Grid --- */
+        .value-section {
+            background-color: var(--secondary-dark);
+        }
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+        .value-card {
+            background-color: rgba(255,255,255,0.05);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-dark);
+            text-align: center;
+            border: 1px solid var(--border-glow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+        }
+        .value-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+            border-color: var(--accent-pink);
+            background-color: rgba(255,255,255,0.08);
+        }
+        .value-card::before { /* Animated border glow */
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue), var(--accent-pink));
+            z-index: -1;
+            filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        .value-card:hover::before {
+            opacity: 1;
+        }
+
+        .value-card .icon {
+            font-size: 4em;
+            color: var(--accent-blue);
+            margin-bottom: 20px;
+            display: block;
+            line-height: 1;
+            text-shadow: 0 0 10px rgba(0,255,255,0.7);
+            transition: transform 0.3s ease;
+        }
+        .value-card:hover .icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        .value-card h3 {
+            color: var(--text-light);
+            margin-top: 0;
+            font-size: 2em;
+            text-shadow: 0 0 5px rgba(0,0,0,0.3);
+        }
+        .value-card p {
+            color: var(--text-medium);
+            font-size: 0.95em;
+        }
+
+        /* --- Course Categories & Showcase --- */
+        .courses-section {
+            background-color: var(--primary-dark);
+        }
+        .category-filter {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 50px;
+            margin-bottom: 40px;
+        }
+        .category-item {
+            background-color: rgba(255,255,255,0.08);
+            color: var(--accent-blue);
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-glow);
+        }
+        .category-item:hover, .category-item.active {
+            background: linear-gradient(45deg, var(--accent-pink), var(--accent-blue));
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-color: transparent;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .course-card {
+            background-color: var(--secondary-dark);
+            border-radius: 15px;
+            box-shadow: var(--shadow-dark);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+        }
+        .course-card-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            border-bottom: 2px solid rgba(255,255,255,0.1);
+        }
+        .course-card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+        .course-card-content h3 {
+            color: var(--accent-pink);
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.8em;
+            text-align: left;
+        }
+        .course-card-content p {
+            color: var(--text-medium);
+            font-size: 0.95em;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+        .course-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+        }
+        .course-card-footer .level {
+            background-color: rgba(0,255,255,0.1);
+            color: var(--accent-blue);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+        .course-card-footer .cta {
+            background: linear-gradient(45deg, var(--accent-blue), #00a0e0);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+        .course-card-footer .cta:hover {
+            background: linear-gradient(45deg, #008fcc, var(--accent-blue));
+        }
+
+        /* --- Student Gallery Section --- */
+        .gallery-section {
+            background-color: var(--secondary-dark);
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 50px;
+        }
+        .gallery-item {
+            background-color: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light-glow);
+            border: 1px solid var(--border-glow);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(0,255,255,0.6);
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 200px; /* Fixed height for consistency */
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 15px;
+            font-size: 0.9em;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(100%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .gallery-caption strong {
+            color: var(--accent-pink);
+        }
+
+        /* --- Testimonials Carousel --- */
+        .testimonials-section {
+            background-color: var(--primary-dark);
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 0 20px; /* Add padding for nav buttons */
+        }
+        .testimonials-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            will-change: transform;
+        }
+        .testimonial-card {
+            flex: 0 0 calc(100% / 2 - 20px); /* Two cards per view on desktop, with gap */
+            min-width: 380px; /* Ensure minimum width for wrapping */
+            background-color: var(--secondary-dark);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-dark);
+            text-align: left;
+            margin: 0 10px; /* Spacing between cards */
+            box-sizing: border-box;
+            border-left: 6px solid var(--accent-pink);
+            position: relative;
+            overflow: hidden;
+        }
+        .testimonial-card::before { /* Subtle background pattern */
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image: radial-gradient(circle, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 15px 15px;
+            opacity: 0.5;
+            z-index: 0;
+        }
+        .testimonial-card p {
+            font-style: italic;
+            font-size: 1.05em;
+            margin-bottom: 20px;
+            color: var(--text-medium);
+            position: relative;
+            z-index: 1;
+        }
+        .testimonial-card strong {
+            display: block;
+            margin-top: 10px;
+            color: var(--accent-blue);
+            font-size: 1.0em;
+            position: relative;
+            z-index: 1;
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            left: 0; /* Align with container padding */
+            padding: 0 5px; /* Slight internal padding */
+        }
+        .carousel-nav button {
+            background-color: rgba(255,0,127,0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 2em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 0 10px rgba(255,0,127,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 5;
+        }
+        .carousel-nav button:hover {
+            background-color: var(--accent-pink);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(255,0,127,0.8);
+        }
+        .carousel-dots {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: #555;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .dot.active {
+            background-color: var(--accent-blue);
+            transform: scale(1.2);
+            box-shadow: 0 0 5px rgba(0,255,255,0.7);
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            background: linear-gradient(135deg, var(--accent-pink), var(--accent-blue));
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid white;
+        }
+        .cta-section h2 {
+            color: white;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(0,0,0,0.5);
+        }
+        .cta-section p {
+            font-size: 1.3em;
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            color: rgba(255,255,255,0.9);
+        }
+        .cta-section .sparkle {
+            position: absolute;
+            background-color: white;
+            width: 10px; height: 10px;
+            border-radius: 50%;
+            opacity: 0;
+            animation: sparkle 2s infinite ease-out;
+        }
+        .cta-section .sparkle:nth-child(1) { top: 20%; left: 10%; animation-delay: 0s; }
+        .cta-section .sparkle:nth-child(2) { top: 50%; right: 5%; animation-delay: 0.5s; }
+        .cta-section .sparkle:nth-child(3) { bottom: 15%; left: 30%; animation-delay: 1s; }
+        @keyframes sparkle {
+            0% { transform: scale(0) translate(0,0); opacity: 0; }
+            50% { transform: scale(1) translate(10px,-10px); opacity: 1; }
+            100% { transform: scale(0.5) translate(20px,20px); opacity: 0; }
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #000;
+            color: var(--text-medium);
+            text-align: center;
+            padding: 50px 0;
+            font-size: 0.95em;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .footer a {
+            color: var(--accent-blue);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: var(--accent-pink);
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            h1 { font-size: 4em; }
+            h2 { font-size: 2.8em; }
+            .hero { padding: 120px 20px; }
+            .hero p { font-size: 1.2em; }
+            .header nav { display: none; }
+            .menu-toggle { display: flex; }
+            .header.active nav {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: rgba(18,18,18,0.98);
+                box-shadow: 0 8px 10px rgba(0,0,0,0.3);
+                padding: 20px 0;
+            }
+            .header.active nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            .header.active nav ul li {
+                margin: 10px 0;
+            }
+            .value-card, .course-card, .gallery-item, .testimonial-card {
+                flex: 1 1 100%;
+                min-width: unset;
+            }
+            .course-grid, .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .testimonials-carousel {
+                margin: 0;
+            }
+            .testimonial-card {
+                margin: 0;
+            }
+            .carousel-nav button {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5em;
+            }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 3em; }
+            h2 { font-size: 2.3em; margin-bottom: 40px; }
+            h2::after { bottom: -15px; width: 80px; }
+            .hero { padding: 100px 20px; }
+            .hero p { font-size: 1em; }
+            .container { padding: 40px 0; }
+            .carousel-nav {
+                width: calc(100% - 20px);
+                left: 10px;
+            }
+        }
+
+        /* --- Scroll Animations --- */
+        .animate-slide-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+        }
+        .animate-scale-fade {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="home">
+        <div class="container">
+            <a href="#" class="logo">PixelFlow</a>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#courses">Courses</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#instructors">Instructors</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#enroll">Enroll</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="light-burst"></div>
+        <div class="light-burst"></div>
+        <div class="hero-content animate-slide-in-up">
+            <h1>Ignite Your Imagination <span>Master Digital Art with PixelFlow Academy</span></h1>
+            <p>From foundational drawing to advanced concept art, PixelFlow Academy offers immersive online courses designed by industry veterans. Transform your passion into professional skills and create breathtaking digital masterpieces.</p>
+            <a href="#courses" class="btn">Discover Your Course</a>
+        </div>
+    </section>
+
+    <section class="section value-section" id="about">
+        <div class="container">
+            <h2 class="animate-slide-in-up">Why Choose PixelFlow Academy?</h2>
+            <div class="value-grid">
+                <div class="value-card animate-scale-fade">
+                    <span class="icon">✨</span>
+                    <h3>Industry-Led Curriculum</h3>
+                    <p>Learn cutting-edge techniques and workflows directly from leading digital artists.</p>
+                </div>
+                <div class="value-card animate-scale-fade" style="--animation-delay: 0.1s;">
+                    <span class="icon">🌐</span>
+                    <h3>Flexible Online Learning</h3>
+                    <p>Access high-definition video lessons and resources anytime, anywhere, at your own pace.</p>
+                </div>
+                <div class="value-card animate-scale-fade" style="--animation-delay: 0.2s;">
+                    <span class="icon">🤝</span>
+                    <h3>Active Community & Feedback</h3>
+                    <p>Connect with a global network of aspiring artists and receive personalized critique.</p>
+                </div>
+                <div class="value-card animate-scale-fade" style="--animation-delay: 0.3s;">
+                    <span class="icon">🚀</span>
+                    <h3>Portfolio & Career Ready</h3>
+                    <p>Build a professional-grade portfolio and gain insights into navigating the art industry.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section courses-section" id="courses">
+        <div class="container">
+            <h2 class="animate-slide-in-up">Our Featured Courses</h2>
+            <div class="category-filter animate-slide-in-up">
+                <div class="category-item active">All Courses</div>
+                <div class="category-item">Concept Art</div>
+                <div class="category-item">Illustration</div>
+                <div class="category-item">Digital Painting</div>
+                <div class="category-item">Character Design</div>
+            </div>
+
+            <div class="course-grid">
+                <div class="course-card animate-scale-fade">
+                    <img src="https://via.placeholder.com/400x200?text=Digital+Painting+Intro" alt="Digital Painting Course" class="course-card-image">
+                    <div class="course-card-content">
+                        <h3>Fundamentals of Digital Painting</h3>
+                        <p>Master the essentials: understanding brushes, layers, color theory, and light. Build a strong foundation for any digital art journey.</p>
+                        <div class="course-card-footer">
+                            <span class="level">Beginner</span>
+                            <a href="#" class="cta">View Course</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card animate-scale-fade" style="--animation-delay: 0.1s;">
+                    <img src="https://via.placeholder.com/400x200?text=Character+Design+Advanced" alt="Character Design Course" class="course-card-image">
+                    <div class="course-card-content">
+                        <h3>Advanced Character Design</h3>
+                        <p>Dive deep into character creation, from initial concept to detailed rendering. Learn anatomy, costume design, and expression.</p>
+                        <div class="course-card-footer">
+                            <span class="level">Intermediate</span>
+                            <a href="#" class="cta">View Course</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card animate-scale-fade" style="--animation-delay: 0.2s;">
+                    <img src="https://via.placeholder.com/400x200?text=Concept+Art+Environments" alt="Environment Concept Art Course" class="course-card-image">
+                    <div class="course-card-content">
+                        <h3>Environment Concept Art</h3>
+                        <p>Discover how to design captivating worlds and atmospheric scenes for games and film. Focus on perspective, composition, and mood.</p>
+                        <div class="course-card-footer">
+                            <span class="level">Advanced</span>
+                            <a href="#" class="cta">View Course</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="course-card animate-scale-fade" style="--animation-delay: 0.3s;">
+                    <img src="https://via.placeholder.com/400x200?text=Pro+Illustration" alt="Professional Illustration Course" class="course-card-image">
+                    <div class="course-card-content">
+                        <h3>Professional Illustration Techniques</h3>
+                        <p>Enhance your storytelling abilities through dynamic compositions, expressive line art, and vibrant color palettes for commercial use.</p>
+                        <div class="course-card-footer">
+                            <span class="level">Intermediate</span>
+                            <a href="#" class="cta">View Course</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="animate-slide-in-up">Student Success Gallery</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px auto; color: var(--text-medium);">
+                Explore the incredible artwork created by our talented students. These pieces showcase the diverse skills and styles developed at PixelFlow Academy.
+            </p>
+            <div class="gallery-grid">
+                <div class="gallery-item animate-scale-fade">
+                    <img src="https://via.placeholder.com/300x200?text=Student+Art+1" alt="Student Artwork 1">
+                    <div class="gallery-caption">
+                        <strong>Sci-Fi Cityscape</strong> by Anya K.
+                    </div>
+                </div>
+                <div class="gallery-item animate-scale-fade" style="--animation-delay: 0.1s;">
+                    <img src="https://via.placeholder.com/300x200?text=Student+Art+2" alt="Student Artwork 2">
+                    <div class="gallery-caption">
+                        <strong>Fantasy Character</strong> by Dmytro V.
+                    </div>
+                </div>
+                <div class="gallery-item animate-scale-fade" style="--animation-delay: 0.2s;">
+                    <img src="https://via.placeholder.com/300x200?text=Student+Art+3" alt="Student Artwork 3">
+                    <div class="gallery-caption">
+                        <strong>Mystic Forest</strong> by Olena P.
+                    </div>
+                </div>
+                <div class="gallery-item animate-scale-fade" style="--animation-delay: 0.3s;">
+                    <img src="https://via.placeholder.com/300x200?text=Student+Art+4" alt="Student Artwork 4">
+                    <div class="gallery-caption">
+                        <strong>Cyberpunk Portrait</strong> by Serhii T.
+                    </div>
+                </div>
+                <div class="gallery-item animate-scale-fade" style="--animation-delay: 0.4s;">
+                    <img src="https://via.placeholder.com/300x200?text=Student+Art+5" alt="Student Artwork 5">
+                    <div class="gallery-caption">
+                        <strong>Creature Design</strong> by Viktoriia I.
+                    </div>
+                </div>
+                <div class="gallery-item animate-scale-fade" style="--animation-delay: 0.5s;">
+                    <img src="https://via.placeholder.com/300x200?text=Student+Art+6" alt="Student Artwork 6">
+                    <div class="gallery-caption">
+                        <strong>Still Life Digital</strong> by Andriy R.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section" id="instructors">
+        <div class="container">
+            <h2 class="animate-slide-in-up">Meet Our Master Instructors</h2>
+            <p style="text-align: center; max-width: 800px; margin: 0 auto 50px auto; color: var(--text-medium);">
+                Our instructors are not just teachers; they are active professionals and visionary artists who bring real-world experience and passion to every lesson.
+            </p>
+            <div class="team-grid">
+                <div class="team-member-card animate-scale-fade">
+                    <img src="https://via.placeholder.com/150x150?text=KS" alt="Ksenia S.">
+                    <h4>Ksenia Savchenko</h4>
+                    <span class="title">Concept Art Director</span>
+                    <p>Award-winning artist with 15+ years experience in major gaming studios.</p>
+                </div>
+                <div class="team-member-card animate-scale-fade" style="--animation-delay: 0.1s;">
+                    <img src="https://via.placeholder.com/150x150?text=OM" alt="Oleksandr M.">
+                    <h4>Oleksandr Mykhailov</h4>
+                    <span class="title">Lead Illustrator</span>
+                    <p>Known for his dynamic storytelling and vibrant, expressive character art.</p>
+                </div>
+                <div class="team-member-card animate-scale-fade" style="--animation-delay: 0.2s;">
+                    <img src="https://via.placeholder.com/150x150?text=ZL" alt="Zlata L.">
+                    <h4>Zlata Lysenko</h4>
+                    <span class="title">Digital Painting Specialist</span>
+                    <p>Expert in realistic rendering and bringing digital canvases to life with light and color.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section testimonials-section" id="testimonials">
+        <div class="container">
+            <h2 class="animate-slide-in-up">Student Testimonials</h2>
+            <div class="carousel-container animate-slide-in-up">
+                <div class="testimonials-carousel">
+                    <div class="testimonial-card">
+                        <p>"PixelFlow Academy is a game-changer! The lessons are incredibly detailed, and the instructors' feedback helped me improve my art dramatically. I finally feel confident in my digital painting skills."</p>
+                        <strong>— Maya S., Aspiring Concept Artist</strong>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"The community is amazing! Getting live critiques and seeing other students' progress is so motivating. I've learned more here in a few months than years of self-study."</p>
+                        <strong>— Bohdan L., Freelance Illustrator</strong>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"I was struggling with character design, but Oleksandr's course broke it down perfectly. Now I can create dynamic characters with ease. Best investment in my artistic journey!"</p>
+                        <strong>— Polina V., Animation Student</strong>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"The quality of the video lectures is superb, and the downloadable resources are invaluable. PixelFlow has truly elevated my artistic capabilities."</p>
+                        <strong>— Roman T., Hobbyist Digital Painter</strong>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="prev-btn">&#8249;</button>
+                    <button class="next-btn">&#8250;</button>
+                </div>
+                <div class="carousel-dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section cta-section" id="enroll">
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <div class="sparkle"></div>
+        <h2 class="animate-slide-in-up">Ready to Ignite Your Artistic Journey?</h2>
+        <p class="animate-slide-in-up">Join PixelFlow Academy today and transform your passion for art into a mastery of digital creation. Your masterpiece awaits!</p>
+        <a href="#" class="btn animate-slide-in-up">Enroll Now & Get 1 Month Free!</a>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 PixelFlow Academy. All rights reserved.</p>
+            <p>Unleashing Creativity, One Pixel at a Time.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Support</a></p>
+            <p>Contact: <a href="mailto:info@pixelflow.com">info@pixelflow.com</a> | Follow us on social media!</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            const elementsToAnimate = document.querySelectorAll('.animate-slide-in-up, .animate-scale-fade');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+
+            // Testimonials Carousel
+            const carouselContainer = document.querySelector('.testimonials-section .carousel-container');
+            const carousel = carouselContainer.querySelector('.testimonials-carousel');
+            const prevBtn = carouselContainer.querySelector('.carousel-nav .prev-btn');
+            const nextBtn = carouselContainer.querySelector('.carousel-nav .next-btn');
+            const dotsContainer = carouselContainer.querySelector('.carousel-dots');
+            const testimonialCards = carouselContainer.querySelectorAll('.testimonial-card');
+
+            let currentIndex = 0;
+            let cardsPerView = 2; // Default for desktop
+            let autoAdvanceInterval;
+
+            const updateCardsPerView = () => {
+                if (window.innerWidth <= 992) { // Tablet and mobile
+                    cardsPerView = 1;
+                    // Adjust margin for single card view
+                    testimonialCards.forEach(card => card.style.margin = '0');
+                } else {
+                    cardsPerView = 2;
+                    testimonialCards.forEach(card => card.style.margin = '0 10px');
+                }
+                updateCarousel();
+            };
+
+            const updateCarousel = () => {
+                const cardMargin = parseFloat(getComputedStyle(testimonialCards[0]).marginRight) * 2;
+                const cardFullWidth = testimonialCards[0].offsetWidth + cardMargin;
+                carousel.style.transform = `translateX(${-currentIndex * cardFullWidth}px)`;
+                updateDots();
+            };
+
+            const updateDots = () => {
+                dotsContainer.innerHTML = ''; // Clear existing dots
+                const totalSlides = Math.ceil(testimonialCards.length / cardsPerView);
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    if (i === Math.floor(currentIndex / cardsPerView)) {
+                        dot.classList.add('active');
+                    }
+                    dot.addEventListener('click', () => {
+                        currentIndex = i * cardsPerView;
+                        updateCarousel();
+                    });
+                    dotsContainer.appendChild(dot);
+                }
+            };
+
+            nextBtn.addEventListener('click', () => {
+                const totalSlides = Math.ceil(testimonialCards.length / cardsPerView);
+                const currentSlide = Math.floor(currentIndex / cardsPerView);
+                if (currentSlide < totalSlides - 1) {
+                    currentIndex += cardsPerView;
+                } else {
+                    currentIndex = 0; // Loop back to start
+                }
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                const totalSlides = Math.ceil(testimonialCards.length / cardsPerView);
+                const currentSlide = Math.floor(currentIndex / cardsPerView);
+                if (currentSlide > 0) {
+                    currentIndex -= cardsPerView;
+                } else {
+                    currentIndex = (totalSlides - 1) * cardsPerView; // Loop to end
+                }
+                updateCarousel();
+            });
+
+            // Initial setup
+            updateCardsPerView();
+            window.addEventListener('resize', updateCardsPerView); // Adjust on resize
+
+            // Auto-advance carousel
+            const startAutoAdvance = () => {
+                autoAdvanceInterval = setInterval(() => {
+                    nextBtn.click();
+                }, 7000); // Change slide every 7 seconds
+            };
+            const stopAutoAdvance = () => clearInterval(autoAdvanceInterval);
+
+            startAutoAdvance();
+            carouselContainer.addEventListener('mouseenter', stopAutoAdvance);
+            carouselContainer.addEventListener('mouseleave', startAutoAdvance);
+
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const header = document.querySelector('.header');
+            menuToggle.addEventListener('click', () => {
+                header.classList.toggle('active');
+                menuToggle.classList.toggle('active'); // Add active class to toggle for animation
+            });
+
+            // Category Filter (Placeholder for functionality)
+            document.querySelectorAll('.category-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real app, you would filter courses here based on category.
+                });
+            });
+        });
+    </script>
+</body>
+</html>

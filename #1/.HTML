@@ -1,0 +1,1157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bathtub Reborn - Your Bath, Renewed!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Montserrat:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3f51b5; /* Indigo Blue for trust/cleanliness */
+            --secondary-color: #5c6bc0; /* Lighter Indigo */
+            --accent-color: #FFC107; /* Gold for shine/quality */
+            --text-color: #333;
+            --light-grey: #f0f2f5;
+            --white: #ffffff;
+            --shadow-light: 0 4px 15px rgba(0,0,0,0.08);
+            --shadow-medium: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: var(--text-color);
+            line-height: 1.6;
+            background-color: var(--white);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 0;
+        }
+
+        /* --- Global Styles & Typography --- */
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        h1 { font-size: 4.5em; line-height: 1.1; margin-bottom: 0.4em; }
+        h2 { font-size: 3.2em; margin-bottom: 60px; position: relative; }
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+        h3 { font-size: 2.2em; text-align: left; }
+        h4 { font-size: 1.6em; margin-bottom: 15px; }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 16px 35px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: var(--shadow-medium);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+        }
+
+        /* --- Header / Navigation --- */
+        .header {
+            background-color: var(--white);
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        .header .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2em;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        .header nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+        .header nav ul li {
+            margin-left: 30px;
+        }
+        .header nav ul li a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.05em;
+            transition: color 0.3s ease, transform 0.3s ease;
+            position: relative;
+        }
+        .header nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            background-color: var(--accent-color);
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+        .header nav ul li a:hover::after {
+            width: 100%;
+        }
+        .header nav ul li a:hover {
+            color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            height: 3px;
+            width: 25px;
+            background-color: var(--primary-color);
+            margin-bottom: 4px;
+            border-radius: 2px;
+        }
+
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--white);
+            padding: 180px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom-left-radius: 50% 20%;
+            border-bottom-right-radius: 50% 20%;
+        }
+        .hero h1 {
+            color: var(--white);
+            text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+        }
+        .hero p {
+            font-size: 1.5em;
+            max-width: 800px;
+            margin: 0 auto 60px auto;
+            opacity: 0.9;
+        }
+        .hero .circle-bg {
+            position: absolute;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            animation: pulse 10s infinite ease-in-out alternate;
+        }
+        .hero .circle-bg:nth-child(1) { width: 400px; height: 400px; top: -100px; left: -100px; }
+        .hero .circle-bg:nth-child(2) { width: 250px; height: 250px; bottom: -50px; right: -50px; animation-delay: 2s; }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 0.1; }
+            50% { transform: scale(1.05); opacity: 0.2; }
+            100% { transform: scale(1); opacity: 0.1; }
+        }
+
+        /* --- About Section --- */
+        .about-section {
+            background-color: var(--white);
+            padding: 80px 0;
+        }
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            text-align: left;
+        }
+        .about-text {
+            flex: 2;
+        }
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            color: #555;
+        }
+        .about-image {
+            flex: 1;
+            max-width: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-medium);
+            position: relative;
+            transform: rotate(3deg); /* Slight tilt for visual interest */
+            transition: transform 0.5s ease;
+        }
+        .about-image:hover {
+            transform: rotate(0deg) scale(1.02);
+        }
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .about-image::before { /* Decorative overlay */
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(to bottom right, rgba(63, 81, 181, 0.2), rgba(255, 193, 7, 0.2));
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+        .about-image:hover::before {
+            opacity: 0;
+        }
+
+        /* --- Services/Features Section --- */
+        .services-section {
+            background-color: var(--light-grey);
+        }
+        .service-cards-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .service-card {
+            background-color: var(--white);
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            flex: 1 1 300px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before { /* Bottom border effect */
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.4s ease-out;
+        }
+        .service-card:hover::before {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-medium);
+        }
+        .service-card .icon {
+            font-size: 4em;
+            color: var(--accent-color);
+            margin-bottom: 20px;
+            display: block;
+            line-height: 1;
+            transition: transform 0.3s ease;
+        }
+        .service-card:hover .icon {
+            transform: rotateY(15deg) scale(1.05);
+        }
+        .service-card h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.8em;
+        }
+        .service-card p {
+            color: #555;
+        }
+
+        /* --- Before & After Section (Simplified for CSS) --- */
+        .before-after-section {
+            background-color: var(--white);
+        }
+        .before-after-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 50px;
+        }
+        .image-container {
+            background-color: var(--light-grey);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            aspect-ratio: 4/3; /* Maintain aspect ratio */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .image-container:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-medium);
+        }
+        .image-labels {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+        .image-labels span {
+            flex: 1;
+            text-align: center;
+        }
+        .image-pair-content {
+            display: flex;
+            flex-grow: 1;
+            padding: 10px;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+        .image-pair-content img {
+            width: 48%; /* Adjust for gap */
+            height: 100%;
+            object-fit: cover;
+            border-radius: 5px;
+            filter: grayscale(0.2);
+            transition: filter 0.3s ease;
+        }
+        .image-container:hover img {
+            filter: grayscale(0);
+        }
+
+        /* --- How It Works Section --- */
+        .how-it-works-section {
+            background-color: var(--light-grey);
+        }
+        .steps-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+            position: relative;
+        }
+        .step-item {
+            flex: 1 1 280px;
+            background-color: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            position: relative;
+            border: 1px solid #ddd;
+            transition: all 0.3s ease;
+            z-index: 2; /* Bring steps above connecting lines */
+        }
+        .step-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-medium);
+            border-color: var(--primary-color);
+        }
+        .step-item .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2em;
+            font-weight: 700;
+            margin: 0 auto 20px auto;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+        .step-item h3 {
+            color: var(--secondary-color);
+            font-size: 1.7em;
+            margin-top: 15px;
+            margin-bottom: 10px;
+        }
+        .step-connector {
+            position: absolute;
+            height: 2px;
+            background-color: var(--accent-color);
+            top: 50%; /* Approx center of step number */
+            transform: translateY(-50%);
+            z-index: 1;
+            animation: drawLine 1s ease-out forwards paused; /* Initial state */
+        }
+        .step-connector:nth-child(even) { /* For even-indexed connectors */
+            background-color: var(--primary-color);
+        }
+        @keyframes drawLine {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        /* --- Testimonials Carousel --- */
+        .testimonials-section {
+            background-color: var(--white);
+        }
+        .carousel-container {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+        .testimonials-carousel {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            will-change: transform;
+        }
+        .testimonial-card {
+            flex: 0 0 100%; /* Each card takes full width */
+            background-color: var(--light-grey);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-light);
+            text-align: center;
+            margin: 0 15px; /* Spacing between cards */
+            box-sizing: border-box; /* Include padding/border in width */
+            border-left: 6px solid var(--accent-color);
+        }
+        .testimonial-card p {
+            font-style: italic;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #444;
+        }
+        .testimonial-card strong {
+            display: block;
+            margin-top: 10px;
+            color: var(--primary-color);
+            font-size: 1.1em;
+        }
+        .carousel-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+            padding: 0 10px;
+        }
+        .carousel-nav button {
+            background-color: rgba(63, 81, 181, 0.7);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 45px;
+            height: 45px;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .carousel-nav button:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        .carousel-dots {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .dot {
+            height: 12px;
+            width: 12px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+        .dot.active {
+            background-color: var(--accent-color);
+            transform: scale(1.2);
+        }
+
+
+        /* --- Booking Form --- */
+        .booking-section {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+        }
+        .booking-section h2 {
+            color: white;
+        }
+        .booking-form {
+            background-color: var(--white);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-medium);
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left;
+            color: var(--text-color);
+        }
+        .booking-form label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+            font-size: 1.05em;
+        }
+        .booking-form input,
+        .booking-form select,
+        .booking-form textarea {
+            width: calc(100% - 24px); /* Account for padding */
+            padding: 14px;
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            color: var(--text-color);
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .booking-form input:focus,
+        .booking-form select:focus,
+        .booking-form textarea:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(63, 81, 181, 0.2);
+            outline: none;
+        }
+        .booking-form textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        .booking-form button {
+            width: 100%;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 18px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+        }
+        .booking-form button:hover {
+            background-color: #FBC02D;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .booking-form .grid-half {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        .booking-form .grid-half > div {
+            flex: 1;
+        }
+        .booking-form .grid-half input,
+        .booking-form .grid-half select {
+            width: calc(100% - 2px); /* Adjust for padding in parent */
+        }
+
+        /* --- FAQ Section --- */
+        .faq-section {
+            background-color: var(--white);
+            padding-top: 80px;
+        }
+        .faq-item {
+            background-color: var(--light-grey);
+            margin-bottom: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+        .faq-question {
+            padding: 20px 30px;
+            background-color: var(--white);
+            border-bottom: 1px solid #ddd;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1em;
+            color: var(--primary-color);
+            transition: background-color 0.3s ease;
+        }
+        .faq-question:hover {
+            background-color: #f5f5f5;
+        }
+        .faq-question .arrow {
+            font-size: 1.4em;
+            transition: transform 0.3s ease;
+        }
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+            color: #555;
+        }
+        .faq-answer p {
+            padding-bottom: 20px;
+            margin-top: 10px;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust based on max content height */
+            padding-top: 10px;
+        }
+        .faq-item.active .faq-question .arrow {
+            transform: rotate(180deg);
+        }
+
+
+        /* --- Footer --- */
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+            font-size: 0.95em;
+            margin-top: 80px;
+        }
+        .footer a {
+            color: var(--accent-color);
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            h1 { font-size: 3.5em; }
+            h2 { font-size: 2.5em; }
+            .hero { padding: 120px 20px; }
+            .hero p { font-size: 1.2em; }
+            .about-content { flex-direction: column; text-align: center; }
+            .about-image { margin-top: 30px; transform: rotate(0deg); }
+            .header nav { display: none; }
+            .menu-toggle { display: flex; }
+            .header.active nav {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                box-shadow: 0 8px 10px rgba(0,0,0,0.1);
+                padding: 20px 0;
+            }
+            .header.active nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            .header.active nav ul li {
+                margin: 10px 0;
+            }
+            .service-card, .step-item, .testimonial-card, .plan-card {
+                flex: 1 1 100%;
+            }
+            .testimonials-carousel {
+                margin: 0; /* Remove side margin for full width */
+            }
+            .testimonial-card {
+                margin: 0; /* No margin on actual cards */
+            }
+            .booking-form .grid-half {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.8em; }
+            h2 { font-size: 2em; margin-bottom: 40px; }
+            h2::after { bottom: -15px; width: 60px; }
+            .hero { padding: 100px 20px; }
+            .hero p { font-size: 1em; }
+            .container { padding: 40px 0; }
+            .carousel-nav {
+                width: calc(100% - 20px);
+                left: 10px;
+            }
+            .carousel-nav button {
+                width: 35px;
+                height: 35px;
+                font-size: 1.2em;
+            }
+        }
+
+        /* --- Scroll Animations --- */
+        .animate-fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .animate-scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .is-visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+    </style>
+</head>
+<body>
+    <header class="header" id="home">
+        <div class="container">
+            <a href="#" class="logo">Bathtub Reborn</a>
+            <nav>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#booking">Book Now</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="circle-bg"></div>
+        <div class="circle-bg"></div>
+        <div class="hero-content animate-fade-in-up">
+            <h1>Your Bathtub's Second Life.</h1>
+            <p>Don't replace, **restore!** We bring back the lost shine and pristine condition of your bathtub with advanced, eco-friendly refinishing techniques. Save money, save time, and embrace a healthier home.</p>
+            <a href="#booking" class="btn">Get a Free Estimate</a>
+        </div>
+    </section>
+
+    <section class="section about-section" id="about">
+        <div class="container">
+            <h2 class="animate-fade-in-up">About Bathtub Reborn</h2>
+            <div class="about-content">
+                <div class="about-text animate-fade-in-up" style="--animation-delay: 0.1s;">
+                    <h3>Your Trusted Partner for Bathtub Refinishing</h3>
+                    <p>At Bathtub Reborn, we believe in **sustainability and quality**. For years, we've been dedicated to providing top-tier bathtub restoration services across Ukraine, transforming worn, chipped, and stained bathtubs into sparkling, like-new fixtures.</p>
+                    <p>Our commitment extends beyond just aesthetics. We use **premium, low-VOC materials** that are safe for your family and the environment. Our highly trained technicians ensure a meticulous process, from thorough cleaning and repair to expert application of our durable finishes.</p>
+                    <p>Choosing restoration means you avoid the high costs, messy demolition, and lengthy disruptions associated with full replacements. It's a smart, efficient, and **eco-conscious choice** for a beautiful bathroom.</p>
+                </div>
+                <div class="about-image animate-fade-in-up" style="--animation-delay: 0.2s;">
+                    <img src="https://via.placeholder.com/400x300?text=Expert+Repair" alt="Expert bathtub repair technician working">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section services-section" id="services">
+        <div class="container">
+            <h2 class="animate-fade-in-up">Our Comprehensive Services</h2>
+            <div class="service-cards-grid">
+                <div class="service-card animate-fade-in-up">
+                    <span class="icon">✨</span>
+                    <h3>Bathtub Refinishing</h3>
+                    <p>Restore porcelain, fiberglass, acrylic, and cast iron tubs to a brilliant, smooth finish.</p>
+                </div>
+                <div class="service-card animate-fade-in-up" style="--animation-delay: 0.1s;">
+                    <span class="icon">🩹</span>
+                    <h3>Chip & Crack Repair</h3>
+                    <p>Seamlessly fix surface imperfections, chips, and minor cracks before refinishing.</p>
+                </div>
+                <div class="service-card animate-fade-in-up" style="--animation-delay: 0.2s;">
+                    <span class="icon">🎨</span>
+                    <h3>Custom Color Options</h3>
+                    <p>Beyond classic white, choose from a range of colors to perfectly match your bathroom decor.</p>
+                </div>
+                <div class="service-card animate-fade-in-up" style="--animation-delay: 0.3s;">
+                    <span class="icon">🚿</span>
+                    <h3>Shower & Tile Resurfacing</h3>
+                    <p>Extend the new look to your surrounding shower walls or tile areas for a complete transformation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section before-after-section" id="gallery">
+        <div class="container">
+            <h2 class="animate-fade-in-up">See the Transformation: Before & After</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 50px auto; font-size: 1.1em; color: #555;">Witness the incredible difference our restoration process makes. From dull and damaged to gleaming and inviting, our results speak for themselves.</p>
+            <div class="before-after-gallery">
+                <div class="image-container animate-scale-in">
+                    <div class="image-labels">
+                        <span>BEFORE</span>
+                        <span>AFTER</span>
+                    </div>
+                    <div class="image-pair-content">
+                        <img src="https://via.placeholder.com/300x200?text=Old+Tub" alt="Old, stained bathtub">
+                        <img src="https://via.placeholder.com/300x200?text=New+Tub" alt="Newly refinished bathtub">
+                    </div>
+                </div>
+                <div class="image-container animate-scale-in" style="--animation-delay: 0.1s;">
+                    <div class="image-labels">
+                        <span>BEFORE</span>
+                        <span>AFTER</span>
+                    </div>
+                    <div class="image-pair-content">
+                        <img src="https://via.placeholder.com/300x200?text=Chipped+Tub" alt="Chipped bathtub edge">
+                        <img src="https://via.placeholder.com/300x200?text=Repaired+Tub" alt="Repaired and refinished bathtub edge">
+                    </div>
+                </div>
+                <div class="image-container animate-scale-in" style="--animation-delay: 0.2s;">
+                    <div class="image-labels">
+                        <span>BEFORE</span>
+                        <span>AFTER</span>
+                    </div>
+                    <div class="image-pair-content">
+                        <img src="https://via.placeholder.com/300x200?text=Dull+Surface" alt="Dull bathtub surface">
+                        <img src="https://via.placeholder.com/300x200?text=Shiny+Surface" alt="Shiny refinished bathtub surface">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section how-it-works-section" id="how-it-works">
+        <div class="container">
+            <h2 class="animate-fade-in-up">Our Simple & Efficient Process</h2>
+            <div class="steps-container">
+                <div class="step-item animate-fade-in-up">
+                    <div class="step-number">1</div>
+                    <h3>Consultation & Quote</h3>
+                    <p>Contact us for a detailed assessment of your bathtub's condition and a transparent, no-obligation estimate.</p>
+                </div>
+                <div class="step-item animate-fade-in-up" style="--animation-delay: 0.15s;">
+                    <div class="step-number">2</div>
+                    <h3>Preparation & Repair</h3>
+                    <p>Our technicians meticulously clean, repair any chips or cracks, and prepare the surface for optimal adhesion.</p>
+                </div>
+                <div class="step-item animate-fade-in-up" style="--animation-delay: 0.3s;">
+                    <div class="step-number">3</div>
+                    <h3>Professional Refinishing</h3>
+                    <p>We apply multiple layers of our specialized, durable coating for a smooth, even, and long-lasting finish.</p>
+                </div>
+                <div class="step-item animate-fade-in-up" style="--animation-delay: 0.45s;">
+                    <div class="step-number">4</div>
+                    <h3>Curing & Enjoyment</h3>
+                    <p>Your "new" bathtub will be ready for use within 24-48 hours, depending on the material and climate.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section testimonials-section" id="testimonials">
+        <div class="container">
+            <h2 class="animate-fade-in-up">What Our Clients Are Saying</h2>
+            <div class="carousel-container animate-fade-in-up">
+                <div class="testimonials-carousel">
+                    <div class="testimonial-card">
+                        <p>"I can't believe it's the same bathtub! Bathtub Reborn did an absolutely phenomenal job. It looks brand new, and the whole process was so quick and clean. Highly recommended for anyone looking to refresh their bathroom without a full renovation."</p>
+                        <strong>— Olena V., Kyiv</strong>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"From start to finish, the experience was seamless. The team was professional, punctual, and the results are stunning. My old, stained tub now shines beautifully. Plus, it saved me a fortune compared to replacing it!"</p>
+                        <strong>— Dmytro P., Lviv</strong>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"Excellent service! They repaired a nasty chip and resurfaced my bathtub perfectly. It's safer for my kids now, and I feel good about choosing an eco-friendly option. Thank you, Bathtub Reborn!"</p>
+                        <strong>— Mariia S., Odesa</strong>
+                    </div>
+                    <div class="testimonial-card">
+                        <p>"My bathroom was instantly transformed. The finish is incredibly smooth and easy to clean. It's truly a high-quality job. I'm telling all my friends about Bathtub Reborn!"</p>
+                        <strong>— Andriy K., Kharkiv</strong>
+                    </div>
+                </div>
+                <div class="carousel-nav">
+                    <button class="prev-btn">&#8249;</button>
+                    <button class="next-btn">&#8250;</button>
+                </div>
+                <div class="carousel-dots"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section booking-section" id="booking">
+        <div class="container">
+            <h2 class="animate-fade-in-up">Ready for a Sparkling New Tub?</h2>
+            <p style="text-align: center; color: rgba(255,255,255,0.9); font-size: 1.2em; max-width: 700px; margin: 0 auto 50px auto;">Fill out the form below to get your personalized quote or schedule your restoration service. We'll get back to you within one business day.</p>
+            <div class="booking-form animate-fade-in-up">
+                <form>
+                    <label for="fullName">Your Full Name</label>
+                    <input type="text" id="fullName" placeholder="e.g., Ivan Horbatyuk" required>
+
+                    <label for="email">Your Email Address</label>
+                    <input type="email" id="email" placeholder="e.g., ivan@example.com" required>
+
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" placeholder="e.g., +380 XX XXX XX XX" required>
+
+                    <div class="grid-half">
+                        <div>
+                            <label for="city">City</label>
+                            <input type="text" id="city" placeholder="e.g., Lviv" required>
+                        </div>
+                        <div>
+                            <label for="bathtubType">Type of Bathtub</label>
+                            <select id="bathtubType" required>
+                                <option value="">Select Type</option>
+                                <option value="porcelain">Porcelain</option>
+                                <option value="fiberglass">Fiberglass</option>
+                                <option value="acrylic">Acrylic</option>
+                                <option value="cast_iron">Cast Iron</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <label for="condition">Describe your bathtub's current condition (chips, stains, dullness, etc.)</label>
+                    <textarea id="condition" placeholder="e.g., Several small chips on the edge, heavy staining near the drain, dull surface overall." rows="5"></textarea>
+
+                    <label for="preferredDate">Preferred Date for Assessment/Service (Optional)</label>
+                    <input type="date" id="preferredDate">
+
+                    <button type="submit">Submit Request</button>
+                    <p style="text-align: center; margin-top: 25px; font-size: 0.9em; color: #666;">We value your privacy. Your information will not be shared.</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section class="section faq-section" id="faq">
+        <div class="container">
+            <h2 class="animate-fade-in-up">Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item animate-fade-in-up">
+                    <div class="faq-question">
+                        Is bathtub refinishing durable? <span class="arrow">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, with proper care, a professionally refinished bathtub can last for 10-15 years or even longer. We use high-quality materials designed for durability and resistance to everyday wear and tear.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-fade-in-up" style="--animation-delay: 0.1s;">
+                    <div class="faq-question">
+                        How long does the refinishing process take? <span class="arrow">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Most bathtub refinishing jobs are completed in a single day, typically 3-5 hours. The tub usually needs to cure for 24-48 hours before it can be used again.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-fade-in-up" style="--animation-delay: 0.2s;">
+                    <div class="faq-question">
+                        Is refinishing safe and eco-friendly? <span class="arrow">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Absolutely! We prioritize using low-VOC (Volatile Organic Compounds) and non-toxic materials. Refinishing also significantly reduces landfill waste compared to bathtub replacement, making it an environmentally responsible choice.</p>
+                    </div>
+                </div>
+                <div class="faq-item animate-fade-in-up" style="--animation-delay: 0.3s;">
+                    <div class="faq-question">
+                        How much does bathtub refinishing cost compared to replacement? <span class="arrow">&#9660;</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Refinishing typically costs 70-80% less than replacing a bathtub, saving you thousands. This includes avoiding demolition, plumbing, and tiling expenses.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Bathtub Reborn. All rights reserved.</p>
+            <p>Your Eco-Friendly Bathtub Restoration Experts.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">Contact Us</a></p>
+            <p><strong>Phone:</strong> +380 98 765 4321 | <strong>Email:</strong> info@bathtubreborn.com</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll Animations
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1 // Trigger when 10% of the element is visible
+            };
+
+            const elementsToAnimate = document.querySelectorAll('.animate-fade-in-up, .animate-scale-in');
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            elementsToAnimate.forEach(element => {
+                observer.observe(element);
+            });
+
+            // How It Works step connector animation (sequential)
+            const howItWorksSection = document.getElementById('how-it-works');
+            if (howItWorksSection) {
+                const howItWorksObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const steps = howItWorksSection.querySelectorAll('.step-item');
+                            steps.forEach((step, index) => {
+                                // Animate the step-item itself with a delay
+                                setTimeout(() => {
+                                    step.classList.add('is-visible');
+                                }, index * 200); // Stagger step animation
+
+                                // Only for steps that are NOT the last one, animate the connector
+                                if (index < steps.length - 1) {
+                                    const nextStepRect = steps[index + 1].getBoundingClientRect();
+                                    const currentStepRect = step.getBoundingClientRect();
+
+                                    const connector = document.createElement('div');
+                                    connector.classList.add('step-connector');
+                                    howItWorksSection.querySelector('.steps-container').appendChild(connector);
+
+                                    // Position connector accurately
+                                    const startX = currentStepRect.left + currentStepRect.width / 2 - howItWorksSection.querySelector('.steps-container').getBoundingClientRect().left;
+                                    const endX = nextStepRect.left + nextStepRect.width / 2 - howItWorksSection.querySelector('.steps-container').getBoundingClientRect().left;
+                                    const centerY = currentStepRect.top + currentStepRect.height / 2 - howItWorksSection.querySelector('.steps-container').getBoundingClientRect().top;
+
+
+                                    connector.style.left = `${startX}px`;
+                                    connector.style.top = `${centerY}px`;
+                                    connector.style.width = `${endX - startX}px`;
+
+                                    // Animate the connector after its step appears
+                                    setTimeout(() => {
+                                        connector.style.animationPlayState = 'running';
+                                    }, (index * 200) + 400); // Delay after step animates
+                                }
+                            });
+                            howItWorksObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.3 }); // Trigger when section is 30% visible
+                howItWorksObserver.observe(howItWorksSection);
+            }
+
+            // Testimonials Carousel
+            const carousel = document.querySelector('.testimonials-carousel');
+            const prevBtn = document.querySelector('.carousel-nav .prev-btn');
+            const nextBtn = document.querySelector('.carousel-nav .next-btn');
+            const dotsContainer = document.querySelector('.carousel-dots');
+            const testimonialCards = document.querySelectorAll('.testimonial-card');
+            let currentIndex = 0;
+
+            const updateCarousel = () => {
+                const cardWidth = testimonialCards[0].offsetWidth + (parseFloat(getComputedStyle(carousel.children[0]).marginRight) * 2); // Card width + margin
+                carousel.style.transform = `translateX(${-currentIndex * cardWidth}px)`;
+                updateDots();
+            };
+
+            const updateDots = () => {
+                dotsContainer.innerHTML = ''; // Clear existing dots
+                testimonialCards.forEach((_, index) => {
+                    const dot = document.createElement('span');
+                    dot.classList.add('dot');
+                    if (index === currentIndex) {
+                        dot.classList.add('active');
+                    }
+                    dot.addEventListener('click', () => {
+                        currentIndex = index;
+                        updateCarousel();
+                    });
+                    dotsContainer.appendChild(dot);
+                });
+            };
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex + 1) % testimonialCards.length;
+                updateCarousel();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex - 1 + testimonialCards.length) % testimonialCards.length;
+                updateCarousel();
+            });
+
+            // Initial setup
+            updateCarousel();
+            window.addEventListener('resize', updateCarousel); // Adjust on resize
+
+            // Auto-advance carousel
+            let autoAdvance = setInterval(() => {
+                nextBtn.click();
+            }, 5000); // Change slide every 5 seconds
+
+            // Pause on hover
+            carousel.parentElement.addEventListener('mouseenter', () => clearInterval(autoAdvance));
+            carousel.parentElement.addEventListener('mouseleave', () => {
+                autoAdvance = setInterval(() => {
+                    nextBtn.click();
+                }, 5000);
+            });
+
+            // FAQ Accordion
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', () => {
+                    const parentItem = question.closest('.faq-item');
+                    parentItem.classList.toggle('active');
+
+                    // Close others
+                    document.querySelectorAll('.faq-item.active').forEach(item => {
+                        if (item !== parentItem) {
+                            item.classList.remove('active');
+                        }
+                    });
+                });
+            });
+
+            // Mobile Menu Toggle
+            const menuToggle = document.querySelector('.menu-toggle');
+            const header = document.querySelector('.header');
+            menuToggle.addEventListener('click', () => {
+                header.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
